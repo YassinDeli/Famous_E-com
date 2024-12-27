@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yassin Deli - Portfolio</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Style.css" />
+    <style>
+      .fade-in {
+        animation: fadeInAnimation 1s ease-out;
+      }
+
+      .fade-out {
+        animation: fadeOutAnimation 1s ease-out;
+      }
+
+      @keyframes fadeInAnimation {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeOutAnimation {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .added-text {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        color: #3273dc;
+        display: flex;
+        align-items: center;
+      }
+
+      .added-text img {
+        margin-right: 10px;
+        width: 50px;
+        height: 50px;
+      }
+
+      #global-cart-card {
+        position: fixed;
+        top: 10%;
+        right: 10px;
+        width: 300px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        display: none;
+      }
+
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .cart-item button {
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar is-light">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <h1 class="title is-4">Famous Online Store</h1>
+        </a>
+        <div class="navbar-end">
+          <a class="navbar-item" href="#">Home</a>
+          <a class="navbar-item" href="#"
+            >Cart <span id="cart-count">0</span></a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <section class="section" id="product-section">
+      <div class="container">
+        <h2 class="title is-2">Featured Products</h2>
+        <div class="columns is-multiline" id="product-list"></div>
+      </div>
+    </section>
+
+    <!-- Global Cart Section -->
+    <div id="global-cart-card" class="card">
+      <div class="card-content">
+        <h3 class="title is-4">Your Cart</h3>
+        <ul id="cart-items-list"></ul>
+        <hr />
+        <p>
+          <strong>Total Price: $<span id="cart-total">0.00</span></strong>
+        </p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>&copy; 2024 Created BY Yassin Deli</p>
+      </div>
+    </footer>
+
+    <script>
+      // List of products
+      const products = [
+        {
+          name: "Product 1",
+          price: 19.99,
+          image: "images/smith2.png",
+        },
+        {
+          name: "Product 2",
+          price: 29.99,
+          image: "images/R (1).png",
+        },
+        {
+          name: "Product 3",
+          price: 69.99,
+          image: "images/R.png",
+        },
+        {
+          name: "Product 4",
+          price: 29.99,
+          image: "images/snoop.png",
+        },
+        {
+          name: "Product 5",
+          price: 80.99,
+          image: "images/eminem.png",
+        },
+        {
+          name: "Product 6",
+          price: 50,
+          image: "images/image.png",
+        },
+        {
+          name: "Product 7",
+          price: 100,
+          image: "images/smith.png",
+        },
+      ];
+
+      // Add products to the page
+      const productList = document.getElementById("product-list");
+
+      products.forEach((product, index) => {
+        const productCard = document.createElement("div");
+        productCard.classList.add("column", "is-3");
+        productCard.innerHTML = `
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="${product.image}" alt="${product.name}" />
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-5">${product.name}</p>
+              <p>$${product.price}</p>
+              <button class="button is-primary add-to-cart" data-index="${index}">Add to Cart</button>
+            </div>
+          </div>
+        `;
+        productList.appendChild(productCard);
+      });
+
+      // Cart array
+      let cart = [];
+      const cartCount = document.getElementById("cart-count");
+      const cartItemsList = document.getElementById("cart-items-list");
+      const cartTotal = document.getElementById("cart-total");
+      const globalCartCard = document.getElementById("global-cart-card");
+
+      document.querySelectorAll(".add-to-cart").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          const productIndex = e.target.getAttribute("data-index");
+          addToCart(products[productIndex]);
+        });
+      });
+
+      // Add item to cart function
+      function addToCart(product) {
+        cart.push(product);
+        updateCart();
+      }
+
+      // Update cart display
+      function updateCart() {
+        // Update cart count in navigation
+        cartCount.textContent = cart.length;
+
+        // Show the global cart card if there are items in the cart
+        if (cart.length > 0) {
+          globalCartCard.style.display = "block";
+        } else {
+          globalCartCard.style.display = "none";
+        }
+
+        // Update the cart items list
+        cartItemsList.innerHTML = "";
+        cart.forEach((item, index) => {
+          const listItem = document.createElement("li");
+          listItem.classList.add("cart-item");
+          listItem.innerHTML = `
+            ${item.name} - $${item.price}
+            <button onclick="removeFromCart(${index})">Remove</button>
+          `;
+          cartItemsList.appendChild(listItem);
+        });
+
+        // Update the total price
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        cartTotal.textContent = total.toFixed(2);
+      }
+
+      // Remove item from cart
+      function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
+      }
+    </script>
+  </body>
+</html>

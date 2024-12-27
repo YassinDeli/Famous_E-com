@@ -1,0 +1,33 @@
+img {
+    width: 5%;
+    height: auto;
+    border-radius: 10px;
+}
+
+#global-cart-card {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    display: none;
+}
+
+.cart-header {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+}
+
+.cart-content {
+    padding: 10px;
+}
+
+.cart-footer {
+    padding: 10px;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+

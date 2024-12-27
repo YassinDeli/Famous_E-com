@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Store</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Style.css" />
+  </head>
+  <body>
+    <nav class="navbar is-light">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <h1 class="title is-4">Famous Online Store</h1>
+        </a>
+        <div class="navbar-end">
+          <a class="navbar-item" href="#">Home</a>
+          <a class="navbar-item" href="#"
+            >Cart <span id="cart-count">0</span></a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="title is-2">Featured Products</h2>
+        <div class="columns is-multiline" id="product-list"></div>
+      </div>
+    </section>
+
+    <div id="global-cart-card">
+      <div class="cart-header">
+        <h3 class="title is-4">Your Cart</h3>
+      </div>
+      <div class="cart-content">
+        <ul id="cart-items-list"></ul>
+        <hr />
+        <p>
+          <strong>Total Price: $<span id="cart-total">0.00</span></strong>
+        </p>
+      </div>
+      <div class="cart-footer">
+        <button class="button is-success">Checkout</button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>&copy; 2024 Created BY Yassin Deli</p>
+      </div>
+    </footer>
+
+    <script>
+      //list of products
+      const products = [
+        {
+          name: "Product 1",
+          price: 19.99,
+          image: "images/smith2.png",
+        },
+        {
+          name: "Product 2",
+          price: 29.99,
+          image: "images/R (1).png",
+        },
+        {
+          name: "Product 3",
+          price: 69.99,
+          image: "images/R.png",
+        },
+        {
+          name: "Product 4",
+          price: 29.99,
+          image: "images/snoop.png",
+        },
+        {
+          name: "Product 5",
+          price: 80.99,
+          image: "images/eminem.png",
+        },
+        {
+          name: "Product 6",
+          price: 50,
+          image: "images/image.png",
+        },
+        {
+          name: "Product 7",
+          price: 100,
+          image: "images/smith.png",
+        },
+      ];
+
+      // Add products to the page
+      const productList = document.getElementById("product-list");
+
+      products.forEach((product, index) => {
+        const productCard = document.createElement("div");
+        productCard.classList.add("column", "is-3");
+        productCard.innerHTML = `
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="${product.image}" alt="${product.name}" />
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-5">${product.name}</p>
+              <p>$${product.price}</p>
+              <button class="button is-primary add-to-cart" data-index="${index}">Add to Cart</button>
+            </div>
+          </div>
+        `;
+        productList.appendChild(productCard);
+      });
+
+      // Cart array
+      let cart = [];
+      const cartCount = document.getElementById("cart-count");
+      const cartItemsList = document.getElementById("cart-items-list");
+      const cartTotal = document.getElementById("cart-total");
+      const globalCartCard = document.getElementById("global-cart-card");
+
+      document.querySelectorAll(".add-to-cart").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          const productIndex = e.target.getAttribute("data-index");
+          addToCart(products[productIndex]);
+        });
+      });
+
+      // Add item to cart function
+      function addToCart(product) {
+        cart.push(product);
+        updateCart();
+      }
+
+      // Update cart display
+      function updateCart() {
+        cartCount.textContent = cart.length;
+        // Show the global cart card if there are items in the cart
+        if (cart.length > 0) {
+          globalCartCard.style.display = "block";
+        } else {
+          globalCartCard.style.display = "none";
+        }
+
+        // Update the cart items list
+        cartItemsList.innerHTML = "";
+        cart.forEach((item, index) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = `${item.name} - $${item.price}`;
+          cartItemsList.appendChild(listItem);
+        });
+
+        // Update the total price
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        cartTotal.textContent = total.toFixed(2);
+      }
+    </script>
+  </body>
+</html>
