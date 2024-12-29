@@ -3,12 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Online Store</title>
+    <title>Yassin Deli - Portfolio</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="Style.css" />
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        rel="stylesheet" />
+    <style>
+      .fade-in {
+        animation: fadeInAnimation 1s ease-out;
+      }
+
+      .fade-out {
+        animation: fadeOutAnimation 1s ease-out;
+      }
+
+      @keyframes fadeInAnimation {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeOutAnimation {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .added-text {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        color: #3273dc;
+        display: flex;
+        align-items: center;
+      }
+
+      .added-text img {
+        margin-right: 10px;
+        width: 50px;
+        height: 50px;
+      }
+
+      #global-cart-card {
+        position: fixed;
+        top: 10%;
+        right: 10px;
+        width: 300px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        display: none;
+      }
+
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .cart-item button {
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar is-light">
@@ -25,37 +95,39 @@
       </div>
     </nav>
 
-    <section class="section">
+    <section class="section" id="product-section">
       <div class="container">
         <h2 class="title is-2">Featured Products</h2>
         <div class="columns is-multiline" id="product-list"></div>
       </div>
     </section>
 
-    <div id="global-cart-card">
-      <div class="cart-header">
+    <!-- Global Cart Section -->
+    <div id="global-cart-card" class="card">
+      <div class="card-content">
         <h3 class="title is-4">Your Cart</h3>
-      </div>
-      <div class="cart-content">
         <ul id="cart-items-list"></ul>
         <hr />
         <p>
           <strong>Total Price: $<span id="cart-total">0.00</span></strong>
         </p>
       </div>
-      <div class="cart-footer">
-        <button class="button is-success">Checkout</button>
-      </div>
     </div>
 
     <footer class="footer">
       <div class="content has-text-centered">
         <p>&copy; 2024 Created BY Yassin Deli</p>
+          <p>
+              <a href="https://github.com/YassinDeli/Famous_E-com" target="github">
+                <i class="fab fa-github"></i> View my project on GitHub
+             </a>
+          </p>
+        </p>
       </div>
     </footer>
 
     <script>
-      //list of products
+      // List of products
       const products = [
         {
           name: "Product 1",
@@ -139,7 +211,9 @@
 
       // Update cart display
       function updateCart() {
+        // Update cart count in navigation
         cartCount.textContent = cart.length;
+
         // Show the global cart card if there are items in the cart
         if (cart.length > 0) {
           globalCartCard.style.display = "block";
@@ -151,13 +225,23 @@
         cartItemsList.innerHTML = "";
         cart.forEach((item, index) => {
           const listItem = document.createElement("li");
-          listItem.textContent = `${item.name} - $${item.price}`;
+          listItem.classList.add("cart-item");
+          listItem.innerHTML = `
+            ${item.name} - $${item.price}
+            <button onclick="removeFromCart(${index})">Remove</button>
+          `;
           cartItemsList.appendChild(listItem);
         });
 
         // Update the total price
         const total = cart.reduce((sum, item) => sum + item.price, 0);
         cartTotal.textContent = total.toFixed(2);
+      }
+
+      // Remove item from cart
+      function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
       }
     </script>
   </body>

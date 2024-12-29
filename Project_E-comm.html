@@ -9,7 +9,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="Style.css" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        rel="stylesheet" />
+    
+
     <style>
+      
       .fade-in {
         animation: fadeInAnimation 1s ease-out;
       }
@@ -36,204 +42,142 @@
         }
       }
 
+      
       .added-text {
         margin-top: 20px;
         font-size: 1.5rem;
-        color: #3273dc;
+        color: #3273dc; 
         display: flex;
         align-items: center;
       }
 
       .added-text img {
         margin-right: 10px;
-        width: 50px;
+        width: 50px; 
         height: 50px;
-      }
-
-      #global-cart-card {
-        position: fixed;
-        top: 10%;
-        right: 10px;
-        width: 300px;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 10;
-        display: none;
-      }
-
-      .cart-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-      }
-
-      .cart-item button {
-        background-color: red;
-        color: white;
-        border: none;
-        cursor: pointer;
-        padding: 5px;
       }
     </style>
   </head>
   <body>
-    <nav class="navbar is-light">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="#">
-          <h1 class="title is-4">Famous Online Store</h1>
-        </a>
-        <div class="navbar-end">
-          <a class="navbar-item" href="#">Home</a>
-          <a class="navbar-item" href="#"
-            >Cart <span id="cart-count">0</span></a
-          >
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <img src="images/image.png" alt="image de yassin deli" />
+          <h1 class="title">Yassin Deli</h1>
+          <h2 class="subtitle">Student [Electronic-Business] | Developer</h2>
         </div>
-      </div>
-    </nav>
-
-    <section class="section" id="product-section">
-      <div class="container">
-        <h2 class="title is-2">Featured Products</h2>
-        <div class="columns is-multiline" id="product-list"></div>
       </div>
     </section>
 
-    <!-- Global Cart Section -->
-    <div id="global-cart-card" class="card">
-      <div class="card-content">
-        <h3 class="title is-4">Your Cart</h3>
-        <ul id="cart-items-list"></ul>
-        <hr />
+    <section class="section">
+      <div class="container">
+        <h2 class="title is-2">About Me</h2>
         <p>
-          <strong>Total Price: $<span id="cart-total">0.00</span></strong>
+          I am currently a third-year Business Computing student. I am highly
+          motivated to keep improving my skills, creative, detail-oriented, and
+          dynamic. I can make a significant contribution to a responsive and
+          productive team.
         </p>
       </div>
-    </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="title is-2">Skills</h2>
+        <div class="columns">
+          <div class="column">
+            <ul>
+              <li>
+                <strong>Programming Languages:</strong> JavaScript, Python, C,
+                Java, PHP
+              </li>
+              <li>
+                <strong>Web Development:</strong> React, HTML, CSS, Node.js
+              </li>
+              <li><strong>Databases:</strong> MySQL, Oracle, Firebase</li>
+            </ul>
+          </div>
+          <div class="column">
+            <ul>
+              <li>
+                <strong>Tools:</strong> Git, Visual Studio Code, Android Studio
+              </li>
+              <li>
+                <strong>Design:</strong> Adobe Photoshop, Illustrator, CapCut
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="title is-2">Experience</h2>
+        <ul>
+          <li><strong>Freelance Web Developer</strong> | 2023 - Present</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="title is-2">Experience</h2>
+        <ul>
+          <li><strong>Freelance Web Developer</strong> | 2023 - Present</li>
+        </ul>
+
+        <a href="Store.html" class="button is-link"
+          >Visit My E-Commerce Project</a
+        >
+
+        <button class="button is-link" id="showMessageButton">
+          Click Me to Say FREE PALESTINE
+        </button>
+
+        <div id="messageContainer" class="added-text"></div>
+      </div>
+    </section>
 
     <footer class="footer">
       <div class="content has-text-centered">
-        <p>&copy; 2024 Created BY Yassin Deli</p>
+        <p>
+          Contact:
+          <a href="mailto:yassindeli24@gmail.com">yassindeli24@gmail.com</a>
+           <p>
+              <a href="https://github.com/YassinDeli/Famous_E-com" target="github">
+                <i class="fab fa-github"></i> View my project on GitHub
+             </a>
+          </p>
+        </p>
       </div>
     </footer>
 
     <script>
-      // List of products
-      const products = [
-        {
-          name: "Product 1",
-          price: 19.99,
-          image: "images/smith2.png",
-        },
-        {
-          name: "Product 2",
-          price: 29.99,
-          image: "images/R (1).png",
-        },
-        {
-          name: "Product 3",
-          price: 69.99,
-          image: "images/R.png",
-        },
-        {
-          name: "Product 4",
-          price: 29.99,
-          image: "images/snoop.png",
-        },
-        {
-          name: "Product 5",
-          price: 80.99,
-          image: "images/eminem.png",
-        },
-        {
-          name: "Product 6",
-          price: 50,
-          image: "images/image.png",
-        },
-        {
-          name: "Product 7",
-          price: 100,
-          image: "images/smith.png",
-        },
-      ];
+      document
+        .getElementById("showMessageButton")
+        .addEventListener("click", function () {
+          const messageContainer = document.getElementById("messageContainer");
 
-      // Add products to the page
-      const productList = document.getElementById("product-list");
+          const image = document.createElement("img");
+          image.src = "images/palestine.webp"; 
+          image.alt = "FREE PALESTINE";
 
-      products.forEach((product, index) => {
-        const productCard = document.createElement("div");
-        productCard.classList.add("column", "is-3");
-        productCard.innerHTML = `
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img src="${product.image}" alt="${product.name}" />
-              </figure>
-            </div>
-            <div class="card-content">
-              <p class="title is-5">${product.name}</p>
-              <p>$${product.price}</p>
-              <button class="button is-primary add-to-cart" data-index="${index}">Add to Cart</button>
-            </div>
-          </div>
-        `;
-        productList.appendChild(productCard);
-      });
+          messageContainer.innerHTML = ""; 
+          messageContainer.appendChild(image); 
+          messageContainer.innerHTML += "FREE PALESTINE"; 
+          messageContainer.classList.add("fade-in"); 
 
-      // Cart array
-      let cart = [];
-      const cartCount = document.getElementById("cart-count");
-      const cartItemsList = document.getElementById("cart-items-list");
-      const cartTotal = document.getElementById("cart-total");
-      const globalCartCard = document.getElementById("global-cart-card");
+          setTimeout(function () {
+            messageContainer.classList.remove("fade-in"); 
+            messageContainer.classList.add("fade-out"); 
 
-      document.querySelectorAll(".add-to-cart").forEach((button) => {
-        button.addEventListener("click", (e) => {
-          const productIndex = e.target.getAttribute("data-index");
-          addToCart(products[productIndex]);
+            setTimeout(function () {
+              messageContainer.innerHTML = ""; 
+              messageContainer.classList.remove("fade-out"); 
+            }, 1000); 
+          }, 2000); 
         });
-      });
-
-      // Add item to cart function
-      function addToCart(product) {
-        cart.push(product);
-        updateCart();
-      }
-
-      // Update cart display
-      function updateCart() {
-        // Update cart count in navigation
-        cartCount.textContent = cart.length;
-
-        // Show the global cart card if there are items in the cart
-        if (cart.length > 0) {
-          globalCartCard.style.display = "block";
-        } else {
-          globalCartCard.style.display = "none";
-        }
-
-        // Update the cart items list
-        cartItemsList.innerHTML = "";
-        cart.forEach((item, index) => {
-          const listItem = document.createElement("li");
-          listItem.classList.add("cart-item");
-          listItem.innerHTML = `
-            ${item.name} - $${item.price}
-            <button onclick="removeFromCart(${index})">Remove</button>
-          `;
-          cartItemsList.appendChild(listItem);
-        });
-
-        // Update the total price
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        cartTotal.textContent = total.toFixed(2);
-      }
-
-      // Remove item from cart
-      function removeFromCart(index) {
-        cart.splice(index, 1);
-        updateCart();
-      }
     </script>
   </body>
 </html>
